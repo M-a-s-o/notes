@@ -1,1 +1,1 @@
-These are my courses notes for my bachelor in Physics.
+These are my courses notes for my bachelor and master in Physics.

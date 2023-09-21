@@ -1,19 +1,26 @@
 #!/usr/bin/env bash
 
 # gets the bachelor-1,2,3 paths, extracts the directory's name, renames every master.pdf to the course's name and copies it to the appropriate repo directory
-for DIR_PATH in $HOME/uni/bachelor-*
-do
-	DIR_NAME="${DIR_PATH%+"${DIR_PATH##*[!/]}"}" # multi-trailing-/ trim
-	DIR_NAME="${DIR_NAME##*/}" # remove everything before the last /
-	for FILE_PATH in $DIR_PATH/*/master.pdf
+ 
+copy_rename () {
+	degree_name=$1 # bachelor or master or phd
+	for course_year_path in $HOME/uni/notes/$degree_name-*
 	do
-		# checks if file exists
-		if [ -f "$FILE_PATH" ] ; then
-			# gets course's path
-			COURSE_PATH="${FILE_PATH%/*}"
-			# gets course's name
-			FILE_NAME="${COURSE_PATH##*/}"
-			cp "$FILE_PATH" "${PWD}/$DIR_NAME/$FILE_NAME.pdf"
-		fi
+		course_year="${course_year_path%+"${course_year_path##*[!/]}"}" # multi-trailing-/ trim
+		course_year="${course_year##*/}" # remove everything before the last /
+		for course_path in $course_year_path/*/master.pdf
+		do
+			# checks if file exists
+			if [ -f "$course_path" ] ; then
+				# gets course's name path
+				course_name_path="${course_path%/*}"
+				# gets course's name
+				course_name="${course_name_path##*/}"
+				cp "$course_path" "${PWD}/${degree_name^}/$course_year/$course_name.pdf"
+			fi
+		done
 	done
-done
+}
+
+copy_rename bachelor
+copy_rename master
