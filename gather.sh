@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 
 # gets the bachelor-1,2,3 paths, extracts the directory's name, renames every master.pdf to the course's name and copies it to the appropriate repo directory
+
+notes_dir=$HOME/uni/notes
  
 copy_rename () {
 	degree_name=$1 # bachelor or master or phd
-	for course_year_path in $HOME/uni/notes/$degree_name-*
+	for course_year_path in $notes_dir/$degree_name-*
 	do
 		course_year="${course_year_path%+"${course_year_path##*[!/]}"}" # multi-trailing-/ trim
 		course_year="${course_year##*/}" # remove everything before the last /
@@ -22,5 +24,13 @@ copy_rename () {
 	done
 }
 
-copy_rename bachelor
-copy_rename master
+echo "Compiling..."
+$notes_dir/scripts/compile-all-masters.py
+
+echo "Copying..."
+for degree in bachelor master
+do
+	copy_rename $degree
+done
+
+echo "Done."
