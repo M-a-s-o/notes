@@ -15,4 +15,4 @@ Il curriculum della magistrale è fisica teorica. Alcuni corsi sono in *italiano
 	- Meccanica Statistica
 	- Teoria della Informazione e Computazione Quantistica
 
-La mia tesi magistrale riguarda Lattice QCD. Soon:tm:.
+La mia tesi magistrale riguarda Lattice QCD. Soon:tm:
